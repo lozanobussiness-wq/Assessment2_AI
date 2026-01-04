@@ -10,25 +10,36 @@ IMAGE_SIZE = 224
 SEED = 42
 VAL_RATIO = 0.20
 
+# ImageNet normalisation stats (used by pretrained CNNs like MobileNetV2)
+IMAGENET_MEAN = (0.485, 0.456, 0.406)
+IMAGENET_STD = (0.229, 0.224, 0.225)
+
+
 # Dataset root directory (ImageFolder expects class subfolders under this path)
 TRAIN_DIR = Path("data/train")
 
 
-def get_transform():
-    # Standardise input size to match the expected model interface (224x224).
-    # Convert grayscale MRI images to 3 channels for compatibility with ImageNet-based models.
-    # Convert PIL image to float tensor in [0, 1] for PyTorch models.
-    return transforms.Compose([
+def get_transform(mode="baseline"):
+    # Standardise input size to match expected model interface (224x224)
+    # Convert grayscale MRI images to 3 channels for compatibility with CNN backbones
+    base = [
         transforms.Resize((IMAGE_SIZE, IMAGE_SIZE)),
         transforms.Grayscale(num_output_channels=3),
         transforms.ToTensor(),
-    ])
+    ]
+
+    # For pretrained ImageNet models, normalise inputs to match training distribution
+    if mode == "imagenet":
+        base.append(transforms.Normalize(IMAGENET_MEAN, IMAGENET_STD))
+
+    return transforms.Compose(base)
 
 
-def get_dataset():
-    # Build a single ImageFolder dataset so class mapping stays consistent everywhere.
-    # This mapping (dataset.classes / class_to_idx) is used later for metrics and confusion matrix.
-    return ImageFolder(root=str(TRAIN_DIR), transform=get_transform())
+
+def get_dataset(transform_mode="baseline"):
+    # Build a single ImageFolder dataset so class mapping stays consistent everywhere
+    return ImageFolder(root=str(TRAIN_DIR), transform=get_transform(mode=transform_mode))
+
 
 
 def get_split_indices(dataset):
@@ -47,9 +58,9 @@ def get_split_indices(dataset):
     return next(splitter.split(indices, targets))
 
 
-def get_loaders(batch_size, num_workers=0):
+def get_loaders(batch_size, num_workers=0, transform_mode="baseline"):
     # Build a single ImageFolder dataset so class mapping stays consistent everywhere.
-    dataset = get_dataset()
+    dataset = get_dataset(transform_mode=transform_mode)
 
     # Create reproducible train/validation indices (stratified split).
     train_idx, val_idx = get_split_indices(dataset)

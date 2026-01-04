@@ -1,0 +1,17 @@
+=== Baseline training + validation ===
+Train: 8192 | Val: 2048
+Batch size: 32 | LR: 0.001
+Classes (label order): ['Mild Impairment', 'Moderate Impairment', 'No Impairment', 'Very Mild Impairment']
+
+=== Validation results ===
+Train avg loss (1 epoch): 1.3868
+Accuracy: 0.2500
+Macro F1: 0.1000
+
+Confusion matrix (rows=true, cols=pred):
+[[512   0   0   0]
+ [512   0   0   0]
+ [512   0   0   0]
+ [512   0   0   0]]
+
+Elapsed (s): 74.7

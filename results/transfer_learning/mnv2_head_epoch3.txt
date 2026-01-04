@@ -1,0 +1,42 @@
+=== Transfer Learning: MobileNetV2 (train head + validate) ===
+Train: 8192 | Val: 2048
+Batch size: 32 | LR: 0.001 | Epochs: 3
+Classes (label order): ['Mild Impairment', 'Moderate Impairment', 'No Impairment', 'Very Mild Impairment']
+
+Epoch 1/3
+Train avg loss: 0.7814
+Val avg loss:   0.6100
+Accuracy:       0.7227
+Macro F1:       0.7053
+
+Confusion matrix (rows=true, cols=pred):
+[[390   2  81  39]
+ [  2 502   5   3]
+ [ 26   1 427  58]
+ [136   7 208 161]]
+
+Epoch 2/3
+Train avg loss: 0.6007
+Val avg loss:   0.5496
+Accuracy:       0.7690
+Macro F1:       0.7716
+
+Confusion matrix (rows=true, cols=pred):
+[[358   1  74  79]
+ [  1 500   3   8]
+ [  4   1 410  97]
+ [ 32   3 170 307]]
+
+Epoch 3/3
+Train avg loss: 0.5585
+Val avg loss:   0.5300
+Accuracy:       0.7764
+Macro F1:       0.7776
+
+Confusion matrix (rows=true, cols=pred):
+[[363   1  70  78]
+ [  1 501   4   6]
+ [  5   1 425  81]
+ [ 34   3 174 301]]
+
+Elapsed (s): 450.5

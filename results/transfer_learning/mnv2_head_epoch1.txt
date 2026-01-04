@@ -1,0 +1,18 @@
+=== Transfer Learning: MobileNetV2 (train head + validate) ===
+Train: 8192 | Val: 2048
+Batch size: 32 | LR: 0.001 | Epochs: 1
+Classes (label order): ['Mild Impairment', 'Moderate Impairment', 'No Impairment', 'Very Mild Impairment']
+
+Epoch 1/1
+Train avg loss: 0.7770
+Val avg loss:   0.5919
+Accuracy:       0.7480
+Macro F1:       0.7447
+
+Confusion matrix (rows=true, cols=pred):
+[[370   2  70  70]
+ [  1 501   3   7]
+ [ 16   0 413  83]
+ [ 78   7 179 248]]
+
+Elapsed (s): 149.1

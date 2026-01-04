@@ -1,0 +1,32 @@
+=== Fine-tuning: MobileNetV2 (unfreeze last blocks) ===
+Train: 8192 | Val: 2048
+Batch size: 32 | LR: 0.0001 | Epochs: 2
+Unfreeze last blocks: 3
+Classes (label order): ['Mild Impairment', 'Moderate Impairment', 'No Impairment', 'Very Mild Impairment']
+Params total: 2,228,996 | trainable: 1,211,204
+
+Epoch 1/2
+Train avg loss: 0.5510
+Val avg loss:   0.4148
+Accuracy:       0.8154
+Macro F1:       0.8186
+
+Confusion matrix (rows=true, cols=pred):
+[[410   0  19  83]
+ [  1 503   0   8]
+ [ 12   0 327 173]
+ [ 16   0  66 430]]
+
+Epoch 2/2
+Train avg loss: 0.3448
+Val avg loss:   0.3421
+Accuracy:       0.8545
+Macro F1:       0.8567
+
+Confusion matrix (rows=true, cols=pred):
+[[425   0  40  47]
+ [  0 504   5   3]
+ [ 11   0 420  81]
+ [ 10   0 101 401]]
+
+Elapsed (s): 318.9

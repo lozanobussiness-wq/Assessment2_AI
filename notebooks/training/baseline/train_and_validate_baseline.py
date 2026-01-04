@@ -4,8 +4,13 @@ import torch
 import torch.nn as nn
 from sklearn.metrics import accuracy_score, f1_score, confusion_matrix
 
+import sys
+from pathlib import Path
+sys.path.append(str(Path(__file__).resolve().parents[1]))
+
 from baseline_cnn import BaselineCNN
 from pipeline_utils import get_loaders
+
 
 # Baseline run settings (kept local to the script for quick iteration)
 BATCH_SIZE = 32

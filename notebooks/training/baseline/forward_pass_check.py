@@ -6,7 +6,7 @@ from torchvision.datasets import ImageFolder
 from torchvision import transforms
 from sklearn.model_selection import StratifiedShuffleSplit
 
-from baseline_cnn import BaselineCNN
+from notebooks.training.baseline.baseline_cnn import BaselineCNN
 
 # Dataset root used throughout the project.
 TRAIN_DIR = Path("data/train")
