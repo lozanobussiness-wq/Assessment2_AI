@@ -1,0 +1,31 @@
+=== Fine-tuning: ResNet18 (unfreeze layer4 + head) ===
+Train: 8192 | Val: 2048
+Batch size: 32 | LR: 0.0001 | Epochs: 2
+Classes (label order): ['Mild Impairment', 'Moderate Impairment', 'No Impairment', 'Very Mild Impairment']
+Params total: 11,178,564 | trainable: 8,395,780
+
+Epoch 1/2
+Train avg loss: 0.4249
+Val avg loss:   0.2524
+Accuracy:       0.8970
+Macro F1:       0.8979
+
+Confusion matrix (rows=true, cols=pred):
+[[453   0  27  32]
+ [  0 507   2   3]
+ [  5   0 434  73]
+ [ 17   0  52 443]]
+
+Epoch 2/2
+Train avg loss: 0.1276
+Val avg loss:   0.1721
+Accuracy:       0.9321
+Macro F1:       0.9326
+
+Confusion matrix (rows=true, cols=pred):
+[[470   0  23  19]
+ [  0 508   1   3]
+ [  3   0 468  41]
+ [  9   0  40 463]]
+
+Elapsed (s): 386.5
