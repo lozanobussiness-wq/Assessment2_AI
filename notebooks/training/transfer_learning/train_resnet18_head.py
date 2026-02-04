@@ -13,6 +13,14 @@ from sklearn.metrics import accuracy_score, f1_score, confusion_matrix
 sys.path.append(str(Path(__file__).resolve().parents[1]))
 from pipeline_utils import get_loaders
 
+# ------------------------------------------------------------
+# NEW: Checkpoint output directory + path
+# (This makes the head-trained model persist outside the run)
+# ------------------------------------------------------------
+CKPT_DIR = Path("results/transfer_learning/checkpoints")
+CKPT_DIR.mkdir(parents=True, exist_ok=True)
+HEAD_CKPT_PATH = CKPT_DIR / "resnet18_head_trained.pt"
+
 
 # ------------------------------------------------------------
 # Run settings
@@ -55,6 +63,7 @@ def train_one_epoch(model, loader, optimizer):
         labels = labels.to(DEVICE)
 
         optimizer.zero_grad()
+        logits = model
         logits = model(images)
         loss = loss_fn(logits, labels)
         loss.backward()
@@ -132,6 +141,24 @@ def main():
         print(f"Macro F1:       {macro_f1:.4f}")
         print("\nConfusion matrix (rows=true, cols=pred):")
         print(cm)
+
+    # ------------------------------------------------------------
+    # NEW: Save head-trained checkpoint (so fine-tuning can CONTINUE properly)
+    # This does not touch test set, and does not change training logic.
+    # ------------------------------------------------------------
+    torch.save(
+        {
+            "model_state_dict": model.state_dict(),
+            "class_to_idx": dataset.class_to_idx,
+            "classes": dataset.classes,
+            "epochs": EPOCHS,
+            "lr": LR,
+            "batch_size": BATCH_SIZE,
+            "stage": "head_training",
+        },
+        HEAD_CKPT_PATH
+    )
+    print(f"\n[CKPT] Saved head-trained checkpoint -> {HEAD_CKPT_PATH}")
 
     print(f"\nElapsed (s): {time() - t0:.1f}")
 
